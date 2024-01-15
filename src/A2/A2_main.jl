@@ -7,6 +7,8 @@ include("A2_src.jl")
 
 
 function A2()
+  println("\nA2 ============================")
+
   data = readdlm("./data/A2.csv", ';', header=true)[1]
   Us = data[:, 1]
   Is = data[:, 2] .± data[:, 3]

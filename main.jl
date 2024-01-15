@@ -10,7 +10,7 @@ function installed()
   return installs
 end
 # Check if packages are installed, else install them
-Packages = ["Plots", "Optim", "DelimitedFiles"]
+Packages = ["Plots", "Optim", "DelimitedFiles", "Measurements", "Statistics"]
 installed_Packages = keys(installed())
 for Package in Packages
   if !(Package in installed_Packages)
@@ -26,7 +26,7 @@ for Package in Packages
   end
 end
 
-dirs = ["data", "media/A1", "media/A2", "media/A3", "media/A4"]
+dirs = ["media", "data", "media/A1", "media/A2", "media/A3", "media/A4", "media/A5"]
 for dir in dirs
   if !(isdir(dir))
     mkdir(dir)
@@ -36,9 +36,15 @@ end
 
 include("src/A1/A1_main.jl")
 include("src/A2/A2_main.jl")
+include("src/A3/A3_main.jl")
 include("src/A4/A4_main.jl")
 
+println("\n========================== Project 5 ==========================\n")
 
 A1()
 A2()
-# A4()
+A3()
+A4()
+
+
+nothing

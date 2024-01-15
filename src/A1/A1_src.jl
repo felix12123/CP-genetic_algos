@@ -11,8 +11,8 @@ function transform_uncertainties(file_path::AbstractString)
 	data = readdlm(file_path, ';', header=true)[1]
 
 	# Convert uncertainties to standard deviation errors
-	transformed_measurements = [data[1, i] ± data[2, i] / 1.96 for i in 1:size(data)[2]]
-
+	transformed_measurements = [data[i, 1] ± data[i, 2] / 1.96 for i in 1:size(data)[2]]
+	
 	return transformed_measurements
 end
 
