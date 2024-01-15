@@ -1,5 +1,3 @@
-using CSV
-using DataFrames
 using Measurements
 using Statistics
 
@@ -10,10 +8,10 @@ function transform_uncertainties(file_path::AbstractString)
 	end
 
 	# Read CSV file into a DataFrame
-	df = CSV.File(file_path, delim=';') |> DataFrame
+	data = readdlm(file_path, ';', header=true)[1]
 
 	# Convert uncertainties to standard deviation errors
-	transformed_measurements = [row.value ± row.uncertainty / 1.96 for row in eachrow(df)]
+	transformed_measurements = [data[1, i] ± data[2, i] / 1.96 for i in 1:size(data)[2]]
 
 	return transformed_measurements
 end
