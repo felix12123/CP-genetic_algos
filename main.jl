@@ -10,7 +10,7 @@ function installed()
   return installs
 end
 # Check if packages are installed, else install them
-Packages = ["Plots", "Optim", "DelimitedFiles"]
+Packages = ["Measurements", "Plots", "Optim", "DelimitedFiles", "DataFrames", "CSV"]
 installed_Packages = keys(installed())
 for Package in Packages
   if !(Package in installed_Packages)
@@ -26,7 +26,7 @@ for Package in Packages
   end
 end
 
-dirs = ["data", "media/A1", "media/A2", "media/A3", "media/A4"]
+dirs = ["media", "data", "media/A1", "media/A2", "media/A3", "media/A4"]
 for dir in dirs
   if !(isdir(dir))
     mkdir(dir)
