@@ -168,5 +168,5 @@ cython_debug/
 *.jpeg
 *.gif
 
-# information
+
 *.toml
