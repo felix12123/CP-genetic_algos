@@ -17,15 +17,15 @@ function transform_uncertainties(file_path::AbstractString)
 end
 
 function internal_uncertainty(ms::Vector{Measurement{T}}) where T <: Real
-	1/sum(1 ./ Measurements.uncertainty.(ms) .^ 2)
+	sqrt(1/sum(1 ./ Measurements.uncertainty.(ms) .^ 2))
 end
 
 function χ(ms::Vector{Measurement{T}}) where T <: Real
 	mean_val = mean(ms).val
-	sum(((Measurements.value.(ms) .- mean_val) ./ Measurements.uncertainty.(ms)) .^ 2)
+	sqrt(sum(((Measurements.value.(ms) .- mean_val) ./ Measurements.uncertainty.(ms)) .^ 2))
 end
 
 function external_uncertainty(ms::Vector{Measurement{T}}) where T <: Real
-	χ(ms)^2/2*internal_uncertainty(ms)
+	sqrt(χ(ms)^2 / 2 * internal_uncertainty(ms)^2)
 end
 

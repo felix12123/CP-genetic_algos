@@ -10,7 +10,7 @@ function installed()
   return installs
 end
 # Check if packages are installed, else install them
-Packages = ["Plots", "Optim", "DelimitedFiles", "Measurements", "Statistics"]
+Packages = ["Plots", "Optim", "DelimitedFiles", "Measurements", "Statistics", "CircularArrays"]
 installed_Packages = keys(installed())
 for Package in Packages
   if !(Package in installed_Packages)
@@ -33,6 +33,11 @@ for dir in dirs
   end
 end
 
+
+global const plot_params = (dpi=300, fontfamily="Computer Modern", fg_legend=:transparent)
+global const data_color = :black
+global const fit_color  = :red
+global const fit_colors = [:red :blue :green :orange :purple :cyan :magenta :yellow :black :white] |> CircularArray
 
 include("src/A1/A1_main.jl")
 include("src/A2/A2_main.jl")

@@ -48,3 +48,7 @@ end
 function fit_goodnes(xs, ys, ab)
   χ2(xs, ys, ab) / (length(xs) - 2)
 end
+
+function internal_uncertainty(ms::Vector{Measurement{T}}) where T <: Real
+	sqrt(1/sum(1 ./ Measurements.uncertainty.(ms) .^ 2))
+end
