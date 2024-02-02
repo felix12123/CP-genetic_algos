@@ -21,12 +21,15 @@ function A3()
 		push!(poly_fits, res[1])
 		push!(χs, χ(cosθ, y, res[1]).val)
 	end
-	fitdatas = [poly_mod(cosθ, poly_fits[n]) for n in eachindex(poly_fits)]
-	colors = permutedims(palette([:red, :blue, :green], length(poly_fits)) |> collect)
-	plot!(plt, cosθ, fitdatas, color=colors, label="n = " .* permutedims(string.(0:length(poly_fits)-1)), linestyle=:dash, dpi=300)
-	display(plt)
-	minχ_ind = findmin(χs)[2]
+	
+	# plot for each fit:
+	# fitdatas = [poly_mod(cosθ, poly_fits[n]) for n in eachindex(poly_fits)]
+	# colors = permutedims(palette([:red, :blue, :green], length(poly_fits)) |> collect)
+	# plot!(plt, cosθ, fitdatas, color=colors, label="n = " .* permutedims(string.(0:length(poly_fits)-1)), linestyle=:dash, dpi=300)
+	# display(plt)
+
+	minχ_ind = argmin(χs)
 	println("Best fit for n = ", minχ_ind - 1)
-	display(plot(eachindex(poly_fits)[5:end] .- 1, χs[5:end], dpi=300, xlabel="n", ylabel="χ", title="χ for different n"))
+	savefig(plot(eachindex(poly_fits)[5:end] .- 1, χs[5:end], dpi=300, xlabel="n", ylabel="χ", title="χ for different n"), "./media/A3/chi_n.png")
 	println("χ = ", χs[minχ_ind])
 end

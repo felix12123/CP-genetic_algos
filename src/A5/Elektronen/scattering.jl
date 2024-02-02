@@ -17,19 +17,19 @@ function dσdΩ_mott(θ, E=1.0, Z1=1, Z2=20)
 end
 
 
-function rand_θ_mott(n::Int, E::Float64, prefac::Float64)
+function rand_θ_mott(n::Int, E::Float64, prefac::Number)
 	γ = E / (m_e*c^2)
 	β2 = 1 - 1/γ^2
 	Z1, Z2 = 1, 20
 	# E = sqrt(v^2 + 2*v*Z2*e^2/(4pi*ϵ0*r))
 	A = prefac*2*Z1*Z2*e^2*c^4 / (4pi*ϵ0*c^4*2^4*m_e^2*γ^2*β2^2)
-	θ(d) = acsc((d/(A* (1-β2)))^(1//4))
+	θ(d) = acsc(max(1, d/(A* (1-β2)))^(1//4))
 	θ.(rand(n))
 end
 
 
 function rand_θ_moe(n::Int, E::Float64, Z1=1, Z2=20) #TODO
-	rand_θ_mott(n, E, Z1, Z2)
+	rand_θ_mott(n, E, prefactor_moe)
 end
 
 # histogram(rand_θ_mott(1000, 100000.0, 100), bins=200, normalized=true, label="θ")
@@ -69,10 +69,12 @@ function moe_energy_change(θ, E) # TODO
 	# E^2 = p^2 + m^2
 	# p = sqrt(E^2 - m_e^2)
 	# 2m_e * (E + m_e) * p * cos(θ) / (())
-	return -E/50 * sin(θ)^2
+	return -E/50 * sin(θ)^2 * prefactor_moe_energy_change
 end
 
 function el_scatter!(el::Electron)
+	min_ang = 0.00001
+	θ = 0.0
 	if rand((false,true))
 		θ = rand_θ_mott(1, el.E, prefactor_mott)[1]
 	else

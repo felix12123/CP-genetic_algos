@@ -1,4 +1,4 @@
-using PhysicalConstants, Unitful, NaturallyUnitful, Plots, Rotations
+using PhysicalConstants, Unitful, NaturallyUnitful, Rotations
 using PhysicalConstants.CODATA2018
 # e in natural units
 
@@ -20,9 +20,5 @@ end
 
 function move_forward!(el, d)
 	el.pos .+= el.vel .* d
-	el.E = (1 - 0.1*d) * kin_E(el) + m_e
-end
-	
-function CSDA(el::Electron, x::Float64)
-	
+	el.E = (1 - prefactor_CSDA*0.1*d) * kin_E(el) + m_e
 end
